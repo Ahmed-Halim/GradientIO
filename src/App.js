@@ -1,24 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import "@fontsource/roboto-mono";
+import "./App.css";
+import gradientColors from "./gradientColors.json";
+import { useState } from "react";
+import GradientItem from "./feature/gradient/GradientItem";
+import CodeMessage from "./feature/alert/CodeMessage";
+import Header from "./feature/header/Header";
+import GradientMaker from "./feature/gradient/GradientMaker";
+import Footer from "./feature/footer/Footer";
 
 function App() {
+  const [nightMode, setNightMode] = useState(false);
+  const [selectedGradient, setSelectedGradient] = useState("");
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <div className={`app${nightMode ? " night-mode" : ""}`}>
+        <Header nightMode={nightMode} setNightMode={setNightMode} />
+        <GradientMaker setSelectedGradient={setSelectedGradient} />
+        <div className="container">
+          {gradientColors.map((gradientColor, idx) => (
+            <GradientItem
+              key={idx}
+              gradientColor={gradientColor}
+              setSelectedGradient={setSelectedGradient}
+            />
+          ))}
+        </div>
+      </div>
+      <CodeMessage body={selectedGradient} />
+
+      <Footer />
+    </>
   );
 }
 
