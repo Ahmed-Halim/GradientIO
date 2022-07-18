@@ -1,18 +1,18 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useState } from "react";
 
 function CodeMessage({ body }) {
-  const message = useRef();
+  const [currentState, setCurrentState] = useState();
   useEffect(() => {
     if (body) {
-      message.current.className = "message fadeIn";
+      setCurrentState("message fadeIn");
       setTimeout(() => {
-        message.current.className = "message fadeOut";
+        setCurrentState("message fadeOut");
       }, 1000);
     }
   }, [body]);
 
   return (
-    <div ref={message} className="message">
+    <div className={currentState}>
       <div className="correct"></div>
       <code>{body}</code>
     </div>
